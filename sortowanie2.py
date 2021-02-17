@@ -20,23 +20,6 @@ def quickSortLast1(input_list, low, high):
         quickSortLast1(input_list, partition_index + 1, high)
 
 
-def partitionLast2(input_list1, low1, high1):
-    i = (low1 - 1)
-    pivot = input_list1[high1]
-    for j in range(low1, high1):
-        if input_list1[j] >= pivot:
-            i = i + 1
-            input_list1[i], input_list1[j] = input_list1[j], input_list1[i]
-    input_list1[i + 1], input_list1[high1] = input_list1[high1], input_list1[i + 1]
-    return (i + 1)
-
-
-def quickSortLast2(input_list1, low1, high1):
-    if low1 < high1:
-        partition_index1 = partitionLast2(input_list1, low1, high1)
-        quickSortLast2(input_list1, low1, partition_index1 - 1)
-        quickSortLast2(input_list1, partition_index1 + 1, high1)
-
 
 # mid pivot
 
@@ -114,7 +97,7 @@ def partitionRand2(input_list, low, high):
 
 
 def quickSortRand2(input_list, low, high):
-    if low > high:
+    if low < high:
         pivot = partitionRand2(input_list, low, high)
         quickSortRand2(input_list, low, pivot - 1)
         quickSortRand2(input_list, pivot + 1, high)
@@ -177,108 +160,216 @@ def heapSort2(arr, n):
         heapify2(arr, i, 0)
 
 
-tablica = [random.randint(-10000, 10000) for i in range(1000)]
-tablica1 = list(tablica)
-tablica2 = list(tablica)
-tablica3 = list(tablica)
-tablica4 = list(tablica)
-dl = len(tablica)
-n = len(tablica)
+def mergeSort1(arr3):
+    if len(arr3) > 1:
 
-print("\n")
-print("Quick Sort z wskaźnikiem na końcu")
+        mid = len(arr3) // 2
 
-print("sortowanie")
-t1 = datetime.now()
-quickSortLast1(tablica1, 0, dl - 1)
-t2 = datetime.now()
-t3 = t2 - t1
-print(t3)
+        L = arr3[:mid]
 
-print("sortowanie")
-t1 = datetime.now()
-quickSortLast2(tablica1, 0, dl - 1)
-t2 = datetime.now()
-t3 = t2 - t1
-print(t3)
+        R = arr3[mid:]
 
-print("sortowanie odwrotne")
-t1 = datetime.now()
-quickSortMid1(tablica2, 0, dl - 1)
-t2 = datetime.now()
-t3 = t2 - t1
-t1 = datetime.now()
-print(t3)
-print("\n")
+        mergeSort1(L)
 
-print("Quick Sort z wskaźnikiem na środku")
+        mergeSort1(R)
 
-print("sortowanie")
-t1 = datetime.now()
-quickSortMid1(tablica2, 0, dl - 1)
-t2 = datetime.now()
-t3 = t2 - t1
-print(t3)
+        i = j = k = 0
 
-print("sortowanie")
-t1 = datetime.now()
-quickSortMid2(tablica2, 0, dl - 1)
-t2 = datetime.now()
-t3 = t2 - t1
-print(t3)
+        while i < len(L) and j < len(R):
+            if L[i] < R[j]:
+                arr3[k] = L[i]
+                i += 1
+            else:
+                arr3[k] = R[j]
+                j += 1
+            k += 1
 
-print("sortowanie odwrotne")
-t1 = datetime.now()
-quickSortRand1(tablica3, 0, dl - 1)
-t2 = datetime.now()
-t3 = t2 - t1
-print(t3)
-print("\n")
+        # Checking if any element was left
+        while i < len(L):
+            arr3[k] = L[i]
+            i += 1
+            k += 1
 
-print("Quick Sort z wskaźnikiem losowym")
+        while j < len(R):
+            arr3[k] = R[j]
+            j += 1
+            k += 1
 
-print("sortowanie")
-t1 = datetime.now()
-quickSortRand1(tablica3, 0, dl - 1)
-t2 = datetime.now()
-t3 = t2 - t1
-print(t3)
 
-print("sortowanie")
-t1 = datetime.now()
-quickSortRand1(tablica3, 0, dl - 1)
-t2 = datetime.now()
-t3 = t2 - t1
-print(t3)
+def mergeSort2(arr3):
+    if len(arr3) > 1:
 
-print("Sortowanie odwrotne")
-t1 = datetime.now()
-quickSortRand2(tablica3, 0, dl - 1)
-t2 = datetime.now()
-t3 = t2 - t1
-print(t3)
-print("\n")
+        mid = len(arr3) // 2
 
-print("sortowanie heapsport")
+        L = arr3[:mid]
 
-print("sortowanie")
-t1 = datetime.now()
+        R = arr3[mid:]
 
-t2 = datetime.now()
-t3 = t2 - t1
-print(t3)
+        mergeSort2(L)
 
-print("sortowanie")
-t1 = datetime.now()
-heapSort(tablica4)
-t2 = datetime.now()
-t3 = t2 - t1
-print(t3)
+        mergeSort2(R)
 
-print("sortowanie odwrotne")
-t1 = datetime.now()
-heapSort2(tablica4, n)
-t2 = datetime.now()
-t3 = t2 - t1
-print(t3)
+        i = j = k = 0
+
+        while i < len(L) and j < len(R):
+            if L[i] > R[j]:
+                arr3[k] = L[i]
+                i += 1
+            else:
+                arr3[k] = R[j]
+                j += 1
+            k += 1
+
+        # Checking if any element was left
+        while i < len(L):
+            arr3[k] = L[i]
+            i += 1
+            k += 1
+
+        while j < len(R):
+            arr3[k] = R[j]
+            j += 1
+            k += 1
+probadane = 1
+probabblad = 1
+
+for p in range(5):
+    tablica = [random.randint(-10000, 10000) for i in range(10000)]
+    tablica1 = list(tablica)    #QuickSort pivot jako ostatni
+    tablica2 = list(tablica)    #QuickSort pivot jako środek
+    tablica3 = list(tablica)    #QuickSort pivot losowy
+    tablica4 = list(tablica)    #HeapSort
+    tablica5 = list(tablica)    #MergeSort
+    dl = len(tablica)
+    n = len(tablica)
+    print('\n Próba na '+str(probadane)+'zestawie  liczb')
+
+    for l in range(5):
+        print('\n Pomiar '+str(probabblad)+' na zestawie liczb '+str(probadane))
+
+        print("\n")
+        '''
+        print("Quick Sort z wskaźnikiem na końcu")
+        
+        print("sortowanie")
+        t1 = datetime.now()
+        quickSortLast1(tablica1, 0, dl - 1)
+        t2 = datetime.now()
+        t3 = t2 - t1
+        print(t3)
+        
+        print("sortowanie")
+        t1 = datetime.now()
+        quickSortLast1(tablica1, 0, dl - 1)
+        t2 = datetime.now()
+        t3 = t2 - t1
+        print(t3)
+        
+        print("sortowanie odwrotne")
+        t1 = datetime.now()
+        quickSortMid1(tablica2, 0, dl - 1)
+        t2 = datetime.now()
+        t3 = t2 - t1
+        t1 = datetime.now()
+        print(t3)
+        print("\n")
+        '''
+        print("Quick Sort z wskaźnikiem na środku")
+
+        print("sortowanie")
+        t1 = datetime.now()
+        quickSortMid1(tablica2, 0, dl - 1)
+        t2 = datetime.now()
+        t3 = t2 - t1
+        print(t3)
+
+        print("sortowanie")
+        t1 = datetime.now()
+        quickSortMid2(tablica2, 0, dl - 1)
+        t2 = datetime.now()
+        t3 = t2 - t1
+        print(t3)
+
+        print("sortowanie odwrotne")
+        t1 = datetime.now()
+        quickSortRand1(tablica3, 0, dl - 1)
+        t2 = datetime.now()
+        t3 = t2 - t1
+        print(t3)
+        print("\n")
+
+        print("Quick Sort z wskaźnikiem losowym")
+
+        print("sortowanie")
+        t1 = datetime.now()
+        quickSortRand1(tablica3, 0, dl - 1)
+        t2 = datetime.now()
+        t3 = t2 - t1
+        print(t3)
+
+        print("sortowanie")
+        t1 = datetime.now()
+        quickSortRand1(tablica3, 0, dl - 1)
+        t2 = datetime.now()
+        t3 = t2 - t1
+        print(t3)
+
+        print("Sortowanie odwrotne")
+        t1 = datetime.now()
+        quickSortRand2(tablica3, 0, dl - 1)
+        t2 = datetime.now()
+        t3 = t2 - t1
+        print(t3)
+        print("\n")
+
+        print("sortowanie heapsport")
+
+        print("sortowanie")
+        t1 = datetime.now()
+        heapSort(tablica4)
+        t2 = datetime.now()
+        t3 = t2 - t1
+        print(t3)
+
+        print("sortowanie")
+        t1 = datetime.now()
+        heapSort(tablica4)
+        t2 = datetime.now()
+        t3 = t2 - t1
+        print(t3)
+
+        print("sortowanie odwrotne")
+        t1 = datetime.now()
+        heapSort2(tablica4, n)
+        t2 = datetime.now()
+        t3 = t2 - t1
+        print(t3)
+        print("\n")
+
+        print("merge sort")
+
+        print("sortowanie")
+        t1 = datetime.now()
+        mergeSort1(tablica5)
+        t2 = datetime.now()
+        t3 = t2 - t1
+        print(t3)
+
+        print("sortowanie")
+        t1 = datetime.now()
+        mergeSort1(tablica5)
+        t2 = datetime.now()
+        t3 = t2 - t1
+        print(t3)
+
+        print("sortowanie")
+        t1 = datetime.now()
+        mergeSort2(tablica5)
+        t2 = datetime.now()
+        t3 = t2 - t1
+        print(t3)
+        probabblad += 1
+
+    probabblad = 1
+    probadane += 1
 
